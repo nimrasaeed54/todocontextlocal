@@ -1,75 +1,42 @@
-// import React from 'react';
+import React from 'react';
+import { TrashIcon, CheckCircleIcon } from '@heroicons/react/24/outline';
 
-// function Todoitem({ todo, updatetodo, deletetodo, togglecomplete }) {
-//   return (
-//     <div>
-//       <input
-//         type="checkbox"
-//         checked={todo.completed}
-//         onChange={() => togglecomplete(todo.id)}
-//       />
-//       <span>{todo.task}</span>
-//       <button onClick={() => deletetodo(todo.id)}>Delete</button>
-//       <button onClick={() => updatetodo(todo.id, { ...todo, task: 'Updated Task' })}>
-//         Edit
-//       </button>
-//     </div>
-//   );
-// }
-
-// export default Todoitem;
-import React, { useState } from 'react';
-
-function Todoitem({ todo, updatetodo, deletetodo, togglecomplete }) {
-  const [isEditing, setIsEditing] = useState(false);
-  const [newTask, setNewTask] = useState(todo.task);
-
-  const handleEdit = () => {
-    // Call the update function with the new task if in edit mode
-    if (isEditing && newTask.trim()) {
-      updatetodo(todo.id, { ...todo, task: newTask });
-    }
-    // Toggle the edit mode
-    setIsEditing(!isEditing);
-  };
-
+function Todoitem({ todo, togglecomplete, deletetodo, isDarkMode }) {
   return (
-    <div className="flex items-center justify-between p-4  rounded-lg shadow-md mb-4">
-      <div className="flex items-center space-x-4">
-        <input
-          type="checkbox"
-          checked={todo.completed}
-          onChange={() => togglecomplete(todo.id)}
-          className="w-5 h-5 black"
-        />
-        {isEditing ? (
-          <input
-            type="text"
-            value={newTask}
-            onChange={(e) => setNewTask(e.target.value)}
-            className="flex-1 p-2 rounded-md text-black"
-          />
-        ) : (
-          <span
-            className={`flex-1 text-lg ${todo.completed ? 'line-through text-black' : 'text-black'}`}
-          >
-            {todo.task}
-          </span>
-        )}
+    <div
+      className={`flex items-center justify-between p-4 mb-2 rounded-lg border ${isDarkMode ? 'border-gray-600' : 'border-gray-300'} 
+      ${todo.completed ? 'bg-gray-300 text-gray-500 line-through' : 'bg-white text-black'} 
+      hover:shadow-lg hover:border-gray-400 transition-all`}
+    >
+      <div className="flex-1">
+        {/* Todo Text */}
+        <div
+          className={`cursor-pointer ${todo.completed ? 'text-gray-500 line-through' : 'text-black'}`}
+          onClick={() => togglecomplete(todo.id)}
+        >
+          {todo.task}
+        </div>
+
+     
       </div>
 
-      <div className="space-x-2">
+      {/* Icons for delete and toggle complete */}
+      <div className="flex space-x-2">
+        {/* Complete button */}
+        <button
+          onClick={() => togglecomplete(todo.id)}
+          className={`transition duration-300 transform ${todo.completed ? 'text-green-500' : 'text-gray-500'} 
+            hover:text-blue-500 hover:scale-105`}
+        >
+          <CheckCircleIcon className="h-5 w-5" />
+        </button>
+
+        {/* Delete button */}
         <button
           onClick={() => deletetodo(todo.id)}
-          className="px-4 py-2  text-white bg-red-700 rounded-lg hover:bg- transition duration-200"
+          className="transition duration-300 hover:text-red-500 hover:scale-105"
         >
-          Delete
-        </button>
-        <button
-          onClick={handleEdit}
-          className="px-4 py-2 text-white bg-yellow-500 rounded-lg hover: transition duration-200"
-        >
-          {isEditing ? 'Save' : 'Edit'}
+          <TrashIcon className="h-5 w-5" />
         </button>
       </div>
     </div>

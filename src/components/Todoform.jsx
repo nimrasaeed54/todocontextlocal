@@ -1,57 +1,30 @@
-// import React, { useState } from 'react';
-
-// function Todoform({ addtodo }) {
-//   const [task, setTask] = useState('');
-
-//   const handleAddTodo = (e) => {
-//     e.preventDefault();
-//     if (task.trim()) {
-//       addtodo({ task, completed: false });
-//       setTask('');
-//     }
-//   };
-
-//   return (
-//     <form onSubmit={handleAddTodo}>
-//       <input
-//         type="text"
-//         value={task}
-//         onChange={(e) => setTask(e.target.value)}
-//         placeholder="Add a new task"
-//       />
-//       <button type="submit">Add</button>
-//     </form>
-//   );
-// }
-
-// export default Todoform;
 import React, { useState } from 'react';
 
-function Todoform({ addtodo }) {
+function Todoform({ addtodo, isDarkMode }) {
   const [task, setTask] = useState('');
 
-  const handleAddTodo = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if (task.trim()) {
+    if (task.trim() !== '') {
       addtodo({ task, completed: false });
       setTask('');
     }
   };
 
   return (
-    <form onSubmit={handleAddTodo} className="flex space-x-4  p-4 rounded-lg shadow-md">
+    <form onSubmit={handleSubmit} className="mb-4">
       <input
         type="text"
         value={task}
         onChange={(e) => setTask(e.target.value)}
+        className={`w-full p-3 border rounded-lg ${isDarkMode ? 'bg-gray-700 text-white' : 'bg-white text-black'} border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500`}
         placeholder="Add a new task"
-        className="flex-1 px-4 py-2 border-2 text-black border-amber-800 rounded-md  focus:outline-none focus:ring-2 focus:ring-amber-900"
       />
       <button
         type="submit"
-        className="px-6 py-2 bg-amber-900 text-white rounded-lg hover: transition duration-75"
+        className={`mt-2 w-full py-2 px-4 rounded-lg ${isDarkMode ? 'bg-blue-500 text-white' : 'bg-blue-700 text-white'} hover:bg-blue-600 transition duration-300`}
       >
-        Add
+        Add Todo
       </button>
     </form>
   );
